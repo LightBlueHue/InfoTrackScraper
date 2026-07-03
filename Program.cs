@@ -1,4 +1,8 @@
-var builder = WebApplication.CreateBuilder(args);
+using InfoTrackScraper.Application;
+using InfoTrackScraper.Infrastructure;
+using System.Net;
+
+var builder = WebApplication.CreateBuilder( args );
 
 // Add services to the container.
 
@@ -6,10 +10,22 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+string? httpClientName = builder.Configuration[ "SolicitorsHttpClientName" ];
+ArgumentException.ThrowIfNullOrEmpty( httpClientName );
+
+
+string? solicitorsBaseAddress = builder.Configuration[ "SolicitorsBaseAddress" ];
+ArgumentException.ThrowIfNullOrEmpty( solicitorsBaseAddress );
+
+
+builder.Services.AddSolicitorsHttpClient( httpClientName, solicitorsBaseAddress );
+
+builder.Services.AddScoped<ISolicitorService, SolicitorService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if ( app.Environment.IsDevelopment() )
 {
     app.MapOpenApi();
 }
