@@ -21,6 +21,7 @@ ArgumentException.ThrowIfNullOrEmpty( solicitorsBaseAddress );
 builder.Services.AddSolicitorsHttpClient( httpClientName, solicitorsBaseAddress );
 
 builder.Services.AddScoped<ISolicitorService, SolicitorService>();
+builder.Services.AddScoped<ISolicitorScraperService, SolicitorScraperService>();
 
 var app = builder.Build();
 

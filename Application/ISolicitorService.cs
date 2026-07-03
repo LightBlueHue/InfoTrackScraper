@@ -1,8 +1,10 @@
 ﻿
+using InfoTrackScraper.Domain;
+
 namespace InfoTrackScraper.Application
 {
     public interface ISolicitorService
     {
-        Task<string> GetSolicitorsAsync( string location );
+        Task<List<Solicitor>> GetSolicitorsAsync( string location );
     }
 }
